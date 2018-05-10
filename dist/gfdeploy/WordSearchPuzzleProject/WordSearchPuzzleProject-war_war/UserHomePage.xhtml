@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="HomePageTemplate.xhtml">
+        <ui:define name="top">
+            <h2>WELCOME #{userHomePageController.getfName()} #{userHomePageController.getlName()}</h2>
+        </ui:define>
+        
+        <ui:define name="content">
+            
+            <div id="intro">
+                <p>There are 3 levels to this game: Easy, Medium and Hard. <br/><br/> As you progress from easy to hard 
+                level, the board gets larger and the words get tougher. </p>
+            </div>
+            <br/><br/>
+            <p:panel id="basic" header="Easy Level" footer="Game Details" style="margin-bottom: 20px">
+                <h:panelGrid columns="2"> 
+                    <p:outputLabel id="EasyIntro">The Easy level contains a 10 by 10 puzzle which will require you to find at the most 7 words.  <br/> 
+                        This means that IF you get LUCKY, you can find less words in the puzzle! </p:outputLabel>
+                    <h:form>
+                        <p:commandButton value="Click here to try our easy level puzzle!!" action="#{userHomePageController.onClickEasy()}"/>
+                    </h:form>
+                </h:panelGrid>
+            </p:panel>
+            <p:panel id="basic1" header="Medium Level" footer="Game Details" style="margin-bottom: 20px">
+                <h:panelGrid columns="2"> 
+                    <p:outputLabel id="MediumIntro">The Medium level contains a 12 by 12 puzzle which will require you to find at the most 5 words.  <br/> 
+                        This means that IF you get LUCKY, you can find less words in the puzzle! </p:outputLabel>
+                    <h:form>
+                        <p:commandButton value="Click here to try our medium level puzzle!!" action="MediumLevelPuzzle"/>
+                </h:form>   
+                </h:panelGrid>
+            </p:panel>
+            <p:panel id="basic2" header="Hard Level" footer="Game Details" style="margin-bottom: 20px">
+                <h:panelGrid columns="2"> 
+                    <p:outputLabel id="HardIntro">The Hard level contains a 14 by 14 puzzle which will require you to find at the most 5 hard words.  <br/> 
+                        This means that IF you get LUCKY, you can find less words in the puzzle! </p:outputLabel>
+                    <h:form>
+                           <p:commandButton value="Click here to try our hard level puzzle!!" action="HardLevelPuzzle"/>
+                    </h:form>
+       
+                </h:panelGrid>
+            </p:panel> <br/> <br/> 
+            <div style="text-align: center">
+                <h:form>
+                    <p:dialog id="dialogStats" widgetVar="dlgStats">
+                         <p:outputPanel id="panelStats" style="font-size: 16px; font-weight: 600;">
+                             <p:panelGrid columns="2">
+                                <p:outputLabel value="Words found in Easy level puzzle : "/>
+                                <h:outputText value="#{userHomePageController.easyFound}"/>
+                                <p:outputLabel value="Words given in Easy level puzzle : "/>
+                                <h:outputText value="#{userHomePageController.easyGiven}"/>
+                                <p:outputLabel value="Win % for Easy level : "/>
+                                <h:outputText value="#{userHomePageController.easyP}"/>
+                                <p:commandButton value="Reset Easy level Stats" action="#{userHomePageController.resetEasy()}"/>
+                             </p:panelGrid>
+                             <p:panelGrid columns="2">
+                                <p:outputLabel value="Words found in Medium level puzzle : "/>
+                                <h:outputText value="#{userHomePageController.mediumFound}"/>
+                                <p:outputLabel value="Words given in Medium level puzzle : "/>
+                                <h:outputText value="#{userHomePageController.mediumGiven}"/>
+                                <p:outputLabel value="Win % for Medium level : "/>
+                                <h:outputText value="#{userHomePageController.mediumP}"/>
+                                <p:commandButton value="Reset Medium level Stats" action="#{userHomePageController.resetMedium()}"/>
+                             </p:panelGrid>
+                             <p:panelGrid columns="2">
+                                <p:outputLabel value="Words found in Hard level puzzle : "/>
+                                <h:outputText value="#{userHomePageController.hardFound}"/>
+                                <p:outputLabel value="Words given in Hard level puzzle : "/>
+                                <h:outputText value="#{userHomePageController.hardGiven}"/>
+                                <p:outputLabel value="Win % for Hard level : "/>
+                                <h:outputText value="#{userHomePageController.hardP}"/>
+                                <p:commandButton value="Reset Hard level Stats" action="#{userHomePageController.resetHard()}"/>
+                             </p:panelGrid>
+                         </p:outputPanel>
+                    </p:dialog>
+                    <p:commandButton style="background-color: #99ccff; position: relative; font-weight: 800" value="Check My Stats" action="#{userHomePageController.onClickStats()}"/>
+                </h:form>
+            </div>
+            
+        </ui:define>
+        
+    </ui:composition>
+</html>

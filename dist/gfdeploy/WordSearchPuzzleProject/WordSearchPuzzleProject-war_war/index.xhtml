@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="WelcomePageTemplate.xhtml">
+        <ui:define name="top">
+            <h2>THE GREATEST GAME EVER</h2>
+        </ui:define>
+        
+        <ui:define name="left">
+            <br/> <br/> <br/><br/> <br/> <br/><br/> <br/> <br/> <h1>Already have an account ?</h1><br/> <br/> 
+            <h1>Sign-In here !!</h1> <br/><br/>
+            <h:form>
+                <p:outputLabel for="loginEmail" value="Email" styleClass="required" style="color: white;"/>
+                <p:inputText id="loginEmail" required="true" size="15" value="#{logInController.loginEmail}" /> <br/> <br/>
+                    <p:outputLabel for="loginPassword" value="Password" styleClass="required" style="color: white;"/>
+                    <p:password id="loginPassword" required="true" size="15" value="#{logInController.loginPassword}"/> <br/> <br/>
+                    <p:commandButton value="Log In" action="#{logInController.onClickLogin()}" /> <br/> <br/> <br/><br/><br/><br/><br/><br/><br/><br/>
+            </h:form>
+        </ui:define>
+        
+        <ui:define name="content">
+            <br/>
+            <p id="IntroPara">Word vision is a word find game intended for users who have a keen interest in playing puzzles that are both 
+            challenging and entertaining. It has features that will keep the player interested with different sorts of 
+            distractions. </p> <br/> <br/> <br/>
+            
+            <div id="SignUp">
+                <p id="SignUpForm">How may I play this wonderful game you ask? Well its simple just provide us 
+            with your Name, Email Address and create a Password! We'll get you started !!</p>
+                <h:form id="SignUpFormForm">
+                    <p:dialog id="dialogSignup" widgetVar="dlgSignup">
+                         <p:outputPanel id="panelSignup" style="font-size: 16px; font-weight: 600;">
+                                Congratulations!! You have now signed up. Go ahead and log in !!
+                        </p:outputPanel>
+                    </p:dialog>
+                    <p:dialog id="dialogSignupfail" widgetVar="dlgSignupfail">
+                         <p:outputPanel id="panelSignupfail" style="font-size: 16px; font-weight: 600;">
+                                Error in constraints... Please verify password and repeat password fields!
+                        </p:outputPanel>
+                    </p:dialog>
+                    <p:panelGrid columns="4">
+                        <p:outputLabel for="firstName" value=" First Name " styleClass="required"/>
+                        <p:inputText id="firstName" required="true" value="#{signUpController.firstName}"/>
+                        <p:outputLabel for="lastName" value=" Last Name " styleClass="required"/>
+                        <p:inputText id="lastName" required="true" value="#{signUpController.lastName}"/>
+                        <p:outputLabel for="email" value=" Email " styleClass="required"/>
+                        <p:inputText id="email" required="true" value="#{signUpController.email}" />
+                        <p:outputLabel for="gender" value=" Gender " styleClass="required"/>
+                        <p:selectOneMenu id="gender" required="true" value="#{signUpController.gender}">
+                            <f:selectItem itemLabel="Male" itemValue="Male"/>
+                            <f:selectItem itemLabel="Female" itemValue="Female"/>
+                            <f:selectItem itemLabel="Other" itemValue="Other"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel for="password" value=" Password " styleClass="required"/>
+                        <p:password id="password" required="true" value="#{signUpController.password}"/>
+                        <p:outputLabel for="repeatPassword" value=" Repeat Password " styleClass="required"/>
+                        <p:password id="repeatPassword" required="true" value="#{signUpController.repeatPassword}"/>
+                        <f:facet name="footer">
+                            <h:panelGroup style="padding-left: 322px;"><p:commandButton value="Sign-Up" action="#{signUpController.onClickSignUp()}"/></h:panelGroup>
+                        </f:facet>
+                    </p:panelGrid>
+                </h:form>
+            </div>
+        </ui:define>
+        
+    </ui:composition>
+</html>

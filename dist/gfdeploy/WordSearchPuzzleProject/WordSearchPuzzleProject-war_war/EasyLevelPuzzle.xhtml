@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <ui:composition template="PuzzleTemplate.xhtml">
+        <ui:define name="top">
+            <h2>WORD VISION: EASY LEVEL PUZZLE</h2>
+        </ui:define>
+        <ui:define name="left">
+            <h:form>
+            <p:panelGrid columns="1">
+                <p:commandLink value="Sign out" action="index"/>
+            </p:panelGrid>
+            </h:form>    
+        </ui:define>
+        <ui:define name="content">
+            <h:form>
+            <div>
+                <h3>SEVEN DEADLY SINS THAT CAN KILL YOUR FUN...</h3>
+                <ol>
+                    <li>TO START THE GAME CLICK ON THE <B>'CLICK HERE TO START PLAYING THE GAME'</B> BUTTON</li>
+                    <li>YOU MUST CLICK ON A WORD EITHER FROM ITS STARTING LETTER TO THE END OR VICE VERSA</li>
+                    <li>YOU MAY NOT CLICK ON THE SAME LETTER TWICE</li>
+                    <li>IF YOU CLICK ON A WRONG LETTER OR END UP CLICKING A LETTER TWICE PLEASE USE THE <b>'CLEAR'</b> BUTTON</li>
+                    <li>BEHIND THE SCENES THE COMPUTER WILL BE USING A KNIGHT'S TOUR ALGORITHM TO CHALLENGE YOU. IF IT SOLVES THE PUZZLE BEFORE YOU, YOU HAVE LOST THE GAME</li>
+                    <li>AFTER YOU HAVE FOUND A WORD FROM THE LIST, YOU MAY CLICK ON THE <b>'CHECK WORD'</b> BUTTON TO SCORE YOURSELF A POINT</li>
+                    <li>WHEN YOU FINISH THE GAME CLICK ON THE SIGN OUT BUTTON TO PLAY ANOTHER LEVEL. YOUR POINTS WILL BE RECORDED</li>
+                </ol>
+            </div>
+            </h:form>
+            <h:form>
+                <p:poll interval="1" listener="#{easyPuzzleController.checkDone()}"/>
+                <p:poll interval="10" listener="#{easyPuzzleController.closeDlg()}" />
+                <p:dialog id="dialogTourCompleted1" widgetVar="dlgTourCompleted1" height="500">
+                    <p:outputPanel id="panelDone1" style="font-size: 16px; font-weight: 600;">
+                        Computer has finished solving the Knight's tour! Please stop solving the puzzle..
+                    </p:outputPanel>
+                </p:dialog>
+                <p:dialog id="dialogPlayerWon1" widgetVar="dlgPlayerWon1" height="300">
+                    <p:outputPanel id="panelWon1" style="font-size: 16px; font-weight: 600;">
+                        Congratulations!! You won this round !
+                    </p:outputPanel>
+                </p:dialog>
+                <p:dialog id ="dialog1" widgetVar="dlg1" closable="false" draggable="false" height="1000" width="1000"> 
+                    <h2>YOU SELECTED THE INCORRECT WORD!!!!!! <br/> YOU WILL BE LOCKED FOR 3-6 SECONDS</h2>
+                </p:dialog>
+                <p:commandButton value="CLICK HERE TO START PLAYING THE GAME" action="#{easyPuzzleController.executeKnightsTour()}">
+                    <f:ajax execute="link"/>
+                </p:commandButton>
+            </h:form>
+            
+            <h:form id="form">
+                <h:panelGrid columns="2" cellpadding="2">
+                    
+                    <table>
+                        
+                        <ui:repeat value="#{easyPuzzleController.puzzleLetters}" var="firstLevel">
+                       <tr>
+                           
+                        <ui:repeat value="#{firstLevel}" var="secondLevel" rendered="#{!empty  firstLevel}">
+                            <td>
+                               
+                                <p:commandButton id="zzz" value="#{secondLevel}" action="#{easyPuzzleController.collectLetters(secondLevel)}" onclick="this.style.color='red';">
+                                </p:commandButton>
+                               
+                            </td>
+                            </ui:repeat>
+                              
+                             <h:panelGroup rendered="#{empty firstLevel}">
+                                 <td colspan="3">empty</td>
+                              </h:panelGroup>
+                               </tr>
+                            </ui:repeat>
+                              
+                 </table>
+                    <p:commandButton value="Clear" action="#{easyPuzzleController.clearSelected()}" onclick="zzz.style.color='none'"/>
+                    
+                    <p:dataTable id="display" value="#{easyPuzzleController.temp}" var="word">
+                        <p:column id="wordCol">
+                            <f:facet name="header">
+                                <h:outputText value="Words to find"/>
+                            </f:facet>
+                            <h:outputText value="#{word}" />
+                        </p:column>
+                    </p:dataTable>
+                    
+                    <p:commandButton value="Check word" action="#{easyPuzzleController.checkWord()}" icon="ui-icon-check">
+                        
+                    </p:commandButton>
+                    <p:row>
+                         Letters Selected : <p:outputLabel id="lettersSelectedStr" value="#{easyPuzzleController.lettersSelectedStr}"/>
+                    </p:row>
+                    
+                    
+                            
+                </h:panelGrid>
+                
+                    
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

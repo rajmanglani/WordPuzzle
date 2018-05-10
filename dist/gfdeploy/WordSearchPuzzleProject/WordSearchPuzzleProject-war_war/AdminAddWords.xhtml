@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="WelcomePageTemplate.xhtml">
+        <ui:define name="top">
+            <h2>ADMIN CONSOLE - ADD WORDS</h2>
+        </ui:define>
+        
+        <ui:define name="left">
+            <h:form>
+                <p:panelGrid columns="1">
+                    <p:commandLink value="Remove Easy-level Words" action="AdminRemoveEasyWords" />
+                    <p:commandLink value="Remove Medium-level Words" action="AdminRemoveMediumWords" />
+                    <p:commandLink value="Remove Hard-level Words" action="AdminRemoveHardWords" />
+                    <p:commandLink value="Sign Out" action="index"/>
+                </p:panelGrid>
+            </h:form>
+        </ui:define>
+        
+        <ui:define name="content">
+            <h:form>
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:tabView id="wordsTab">
+                            
+                            <p:tab title="Add Easy-level Word">
+                                <p><big>***** NOTE ***** WORDS MUST HAVE 9 OR LESS LETTERS</big></p>
+                                <p:panelGrid columns="2">
+                                    <p:outputLabel for="easyword" value="Enter Word (Max 9 letters)"/>
+                                    <p:inputText id="easyword" maxlength="9" value="#{adminAddWordsController.easyNewWord}" />
+                                    <p:outputLabel for="fakeEasyword" value="Enter distraction word (Max 9 letters -- optional)"/>
+                                    <p:inputText id="fakeEasyword" maxlength="9" value="#{adminAddWordsController.fakeEasyword}" />
+                                </p:panelGrid>
+                                <br/><p:commandButton value="Add Word" id="btn1"  action="#{adminAddWordsController.onClickEasy()}" />
+                            </p:tab>
+                            
+                            <p:tab title="Add Medium-level Word">
+                                <p><big>***** NOTE ***** WORDS MUST HAVE 11 OR LESS LETTERS</big></p>
+                                <p:panelGrid columns="2">
+                                    <p:outputLabel for="mediumword" value="Enter Word (Max 11 letters)"/>
+                                    <p:inputText id="mediumword" maxlength="11" value="#{adminAddWordsController.mediumNewWord}" />
+                                    <p:outputLabel for="fakeMediumword" value="Enter distraction word (Max 11 letters -- optional)"/>
+                                    <p:inputText id="fakeMediumword" maxlength="11" value="#{adminAddWordsController.fakeMediumword}" />
+                                </p:panelGrid>
+                                <br/><p:commandButton value="Add Word" id="btn2"  action="#{adminAddWordsController.onClickMedium()}" />
+                            </p:tab>
+                            
+                            
+                            <p:tab title="Add Hard-level Word">
+                                <p><big>***** NOTE ***** WORDS MUST HAVE 13 OR LESS LETTERS</big></p>
+                                <p:panelGrid columns="2">
+                                    <p:outputLabel for="hardword" value="Enter Word (Max 13 letters)"/>
+                                    <p:inputText id="hardword" maxlength="13" value="#{adminAddWordsController.hardNewWord}" />
+                                    <p:outputLabel for="fakeHardword" value="Enter distraction word (Max 13 letters -- optional)"/>
+                                    <p:inputText id="fakeHardword" maxlength="13" value="#{adminAddWordsController.fakeHardword}" />
+                                </p:panelGrid>
+                                <br/><p:commandButton value="Add Word" id="btn3"  action="#{adminAddWordsController.onClickHard()}" />
+                            </p:tab>
+                            
+                        </p:tabView>
+                    </h:panelGrid>
+            </h:form>
+            
+            <p:dialog id="dialogId" widgetVar="dlg">
+                <p:outputPanel id="pn1">
+                    Easy level Word Added to database.
+                </p:outputPanel>
+            </p:dialog>
+            
+            <p:dialog id="dialogId2" widgetVar="dlg2">
+                <p:outputPanel id="pn2">
+                    Medium level Word Added to database.
+                </p:outputPanel>
+            </p:dialog>
+            
+            
+            <p:dialog id="dialogId3" widgetVar="dlg3">
+                <p:outputPanel id="pn3">
+                    Hard level Word Added to database.
+                </p:outputPanel>
+            </p:dialog>
+            
+            
+        </ui:define>
+        
+    </ui:composition>
+</html>

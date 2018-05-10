@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="PuzzleTemplate.xhtml">
+        <ui:define name="top">
+            <h2>WORD VISION: MEDIUM LEVEL PUZZLE</h2>
+        </ui:define>
+        <ui:define name="left">
+            <h:form>
+            <p:panelGrid columns="1">
+                <p:commandLink value="Sign out" action="index"/>
+            </p:panelGrid>
+            </h:form>    
+        </ui:define>
+        <ui:define name="content">
+            
+            <h:form>
+            <div>
+                <h3>SEVEN DEADLY SINS THAT CAN KILL YOUR FUN...</h3>
+                <ol>
+                    <li>TO START THE GAME CLICK ON THE <B>'CLICK HERE TO START PLAYING THE GAME'</B> BUTTON</li>
+                    <li>YOU MUST CLICK ON A WORD EITHER FROM ITS STARTING LETTER TO THE END OR VICE VERSA</li>
+                    <li>YOU MAY NOT CLICK ON THE SAME LETTER TWICE</li>
+                    <li>IF YOU CLICK ON A WRONG LETTER OR END UP CLICKING A LETTER TWICE PLEASE USE THE <b>'CLEAR'</b> BUTTON</li>
+                    <li>BEHIND THE SCENES THE COMPUTER WILL BE USING A KNIGHT'S TOUR ALGORITHM TO CHALLENGE YOU. IF IT SOLVES THE PUZZLE BEFORE YOU, YOU HAVE LOST THE GAME</li>
+                    <li>AFTER YOU HAVE FOUND A WORD FROM THE LIST, YOU MAY CLICK ON THE <b>'CHECK WORD'</b> BUTTON TO SCORE YOURSELF A POINT</li>
+                    <li>WHEN YOU FINISH THE GAME CLICK ON THE SIGN OUT BUTTON TO PLAY ANOTHER LEVEL. YOUR POINTS WILL BE RECORDED</li>
+                </ol>
+            </div>
+            </h:form>
+            
+            <h:form>
+                <p:poll interval="1" listener="#{mediumPuzzleController.checkDone()}"/>
+                <p:poll interval="13" listener="#{mediumPuzzleController.closeDlg()}" />
+                <p:dialog id="dialogTourCompleted" widgetVar="dlgTourCompleted" height="500">
+                    <p:outputPanel id="panelDone" style="font-size: 16px; font-weight: 600;">
+                        Computer has finished solving the Knight's tour! Please stop solving the puzzle..
+                    </p:outputPanel>
+                </p:dialog>
+                <p:dialog id="dialogPlayerWon" widgetVar="dlgPlayerWon" height="300">
+                    <p:outputPanel id="panelWon" style="font-size: 16px; font-weight: 600;">
+                        Congratulations!! You won this round !
+                        <br/>
+                        <p:commandLink value="Check Stats" action="#{mediumPuzzleController.onClickStats()}"/>
+                        <br/>
+                        <p:commandLink value="Play again" action="#{mediumPuzzleController.onClickPlayAgain()}"/>
+                    </p:outputPanel>
+                </p:dialog>
+                <p:dialog id ="dialog2" widgetVar="dlg2" closable="false" draggable="false" height="800" width="1700" resizable="false"> 
+                    <h2>YOU SELECTED THE INCORRECT WORD!!!!!! <br/> YOU WILL BE LOCKED FOR 3-6 SECONDS</h2>
+                    <img src="resources/foto-90ta-2-del.jpg" alt="Explosion" height="700" width="1650" />
+                </p:dialog>
+                <p:commandButton value="CLICK HERE TO START PLAYING THE GAME" action="#{mediumPuzzleController.executeKnightsTour()}">
+                    <f:ajax execute="link"/>
+                </p:commandButton>
+            </h:form>
+            
+            
+            <h:form id="form1">
+                <h:panelGrid columns="2" cellpadding="2">
+                    
+                    <table>
+                        
+                        <ui:repeat value="#{mediumPuzzleController.puzzleLetters}" var="firstLevel">
+                       <tr>
+                           
+                        <ui:repeat value="#{firstLevel}" var="secondLevel" rendered="#{!empty  firstLevel}">
+                            <td>
+                               
+                                <p:commandButton id="zzz" value="#{secondLevel}" action="#{mediumPuzzleController.collectLetters(secondLevel)}" onclick="this.style.color='red';"/>
+                               
+                            </td>
+                            </ui:repeat>
+                              
+                             <h:panelGroup rendered="#{empty firstLevel}">
+                                 <td colspan="3">empty</td>
+                              </h:panelGroup>
+                               </tr>
+                            </ui:repeat>
+                              
+                 </table>
+                    <p:commandButton value="Clear" action="#{mediumPuzzleController.clearSelected()}" onclick="zzz.style.color='none'"/>
+                    
+                    <p:dataTable id="display1" value="#{mediumPuzzleController.temp}" var="word">
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Words to find"/>
+                            </f:facet>
+                            <h:outputText value="#{word}" />
+                        </p:column>
+                    </p:dataTable>
+                    
+                    <p:commandButton value="Check word" action="#{mediumPuzzleController.checkWord()}" icon="ui-icon-check">
+                        
+                    </p:commandButton>
+                    <p:row>
+                        Letters Selected : <p:outputLabel id="lettersSelectedStr1" value="#{mediumPuzzleController.lettersSelectedStr1}"/>
+                    </p:row>
+                </h:panelGrid>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
